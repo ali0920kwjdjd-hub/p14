@@ -1,12 +1,269 @@
 <html>
     <head>
-        <title>
+        <title>🌺 Altar Digital del Día de Muertos 💀</title>
+        <link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap" rel="stylesheet">
+        <style>
+            :root {
+                --primary-color: #FF6B6B;
+                --secondary-color: #4ECDC4;
+                --accent-color: #FFE66D;
+                --dark-color: #2C3E50;
+                --light-color: #FFF5E6;
+            }
 
-        </title>
+            body {
+                margin: 0;
+                min-height: 100vh;
+                background: radial-gradient(circle at center, #1a0f2e 0%, #000000 100%);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-family: 'Berkshire Swash', cursive;
+                overflow: hidden;
+                position: relative;
+            }
+
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: 
+                    radial-gradient(circle at 20% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 40%),
+                    radial-gradient(circle at 80% 80%, rgba(78, 205, 196, 0.1) 0%, transparent 40%);
+                pointer-events: none;
+            }
+
+            .container {
+                position: relative;
+                display: inline-block;
+                animation: floatIn 2s ease-out;
+                padding: 40px;
+                border-radius: 20px;
+                background: rgba(0, 0, 0, 0.7);
+                box-shadow: 
+                    0 0 50px rgba(255, 107, 107, 0.3),
+                    0 0 100px rgba(78, 205, 196, 0.2);
+            }
+
+            .decoration {
+                position: absolute;
+                font-size: 50px;
+                opacity: 0;
+                filter: drop-shadow(0 0 10px var(--accent-color));
+                animation: enterAndDance 3s infinite;
+            }
+
+            .altar-title {
+                position: absolute;
+                top: -60px;
+                left: 50%;
+                transform: translateX(-50%);
+                color: var(--accent-color);
+                font-size: 2.5em;
+                text-shadow: 0 0 10px var(--primary-color);
+                white-space: nowrap;
+                animation: glowText 2s infinite alternate;
+            }
+
+            .papel-picado {
+                position: absolute;
+                width: 120%;
+                top: -40px;
+                left: -10%;
+                height: 40px;
+                display: flex;
+                justify-content: space-around;
+                animation: wavePicado 3s infinite ease-in-out;
+            }
+
+            .picado-item {
+                font-size: 30px;
+                color: var(--accent-color);
+                text-shadow: 0 0 10px var(--primary-color);
+                animation: rotatePicado 4s infinite linear;
+            }
+
+            .candle {
+                position: absolute;
+                font-size: 40px;
+                animation: candleFlicker 2s infinite alternate;
+            }
+
+            .candle:nth-child(1) { top: 20px; left: -50px; }
+            .candle:nth-child(2) { top: 20px; right: -50px; }
+            .candle:nth-child(3) { bottom: 20px; left: -50px; }
+            .candle:nth-child(4) { bottom: 20px; right: -50px; }
+
+            .flower {
+                position: absolute;
+                font-size: 30px;
+                animation: rotateFlower 6s infinite linear;
+            }
+
+            .flower:nth-child(1) { top: -30px; left: -30px; animation-delay: 0s; }
+            .flower:nth-child(2) { top: -30px; right: -30px; animation-delay: 1s; }
+            .flower:nth-child(3) { bottom: -30px; left: -30px; animation-delay: 2s; }
+            .flower:nth-child(4) { bottom: -30px; right: -30px; animation-delay: 3s; }
+
+            table {
+                border-collapse: collapse;
+                box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+                border-radius: 10px;
+                overflow: hidden;
+                transform: perspective(1000px) rotateX(5deg);
+                transition: transform 0.3s;
+            }
+
+            table:hover {
+                transform: perspective(1000px) rotateX(0deg);
+            }
+
+            td {
+                transition: all 0.3s;
+                position: relative;
+                overflow: hidden;
+            }
+
+            td:hover {
+                transform: scale(1.1);
+                z-index: 1;
+                box-shadow: 0 0 15px rgba(255, 230, 109, 0.8);
+            }
+            
+            .ofrenda-image {
+                position: absolute;
+                width: 300px;
+                height: 300px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0);
+                z-index: -1;
+                opacity: 0;
+                border-radius: 15px;
+                box-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+                animation: enterImage 1.5s ease-out forwards, glowEffect 2s infinite alternate;
+            }
+            
+            .table-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                animation: enterImage 1.5s ease-out forwards;
+            }
+            
+            .altar-cell {
+                position: relative;
+                padding: 0 !important;
+                animation: enterImage 1.5s ease-out forwards;
+            }
+            
+            .altar-cell img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+            }
+            
+            @keyframes glowEffect {
+                from {
+                    box-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+                }
+                to {
+                    box-shadow: 0 0 30px rgba(255, 165, 0, 0.8);
+                }
+            }
+            
+            @keyframes enterAndDance {
+                0% { 
+                    opacity: 0;
+                    transform: scale(0) rotate(0deg);
+                }
+                10% { 
+                    opacity: 1;
+                    transform: scale(1) rotate(0deg);
+                }
+                35% { transform: scale(1) translateY(-10px) rotate(10deg); }
+                60% { transform: scale(1) translateY(0) rotate(0deg); }
+                85% { transform: scale(1) translateY(-10px) rotate(-10deg); }
+            }
+            
+            @keyframes wave {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+
+            @keyframes floatIn {
+                0% { 
+                    opacity: 0;
+                    transform: translateY(50px);
+                }
+                100% { 
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes glowText {
+                0% { text-shadow: 0 0 10px var(--primary-color); }
+                100% { text-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--secondary-color); }
+            }
+
+            @keyframes wavePicado {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-10px); }
+            }
+
+            @keyframes rotatePicado {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+
+            @keyframes candleFlicker {
+                0%, 100% { 
+                    opacity: 1;
+                    text-shadow: 0 0 20px #FFD700, 0 0 40px #FF6B6B;
+                }
+                50% { 
+                    opacity: 0.8;
+                    text-shadow: 0 0 10px #FFD700, 0 0 20px #FF6B6B;
+                }
+            }
+
+            @keyframes rotateFlower {
+                0% { transform: rotate(0deg) translateX(10px) rotate(0deg); }
+                100% { transform: rotate(360deg) translateX(10px) rotate(-360deg); }
+            }
+
+            @keyframes sparkle {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.5; }
+            }
+        </style>
     </head>
     <body>
-
-<table border="1px" width="540px" height="320px">
+    <div class="container">
+        <h1 class="altar-title">✨ Altar Digital ✨</h1>
+        <div class="papel-picado">
+            <span class="picado-item">🎭</span>
+            <span class="picado-item">💀</span>
+            <span class="picado-item">🌺</span>
+            <span class="picado-item">🕯️</span>
+            <span class="picado-item">🦋</span>
+            <span class="picado-item">🌸</span>
+        </div>
+        <div class="candle">🕯️</div>
+        <div class="candle">🕯️</div>
+        <div class="candle">�️</div>
+        <div class="candle">🕯️</div>
+        <div class="flower">🌺</div>
+        <div class="flower">🌸</div>
+        <div class="flower">🌹</div>
+        <div class="flower">�</div>
+        <table border="1px" width="540px" height="320px">
 <tr>
     <td style="background-color:white"></td>
     <td style="background-color:white"></td>
